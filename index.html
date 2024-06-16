@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To DO List</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style scoped>
+        .pointer {
+          cursor: pointer;
+        }
+        .noselect {
+          -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+          -khtml-user-select: none; /* Konqueror HTML */
+          -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                          supported by Chrome, Edge, Opera and Firefox */
+        }
+        .line-through {
+          text-decoration: line-through;
+        }
+        </style>
+</head>
+<body>
+    <div id = "app">
+
+       
+            <div class="container" style="max-width: 600px">
+              <!-- Heading -->
+              <h2 class="text-center mt-5">My Vue Todo App</h2>
+          
+              <!-- Input -->
+              <div class="d-flex mt-5">
+                <input
+                  type="text"
+                  v-model="task"
+                  placeholder="Enter task"
+                  class="w-100 form-control"
+                />
+                <button class="btn btn-warning rounded-0" @click="submitTask">
+                  SUBMIT
+                </button>
+              </div>
+          
+              <!-- Task table -->
+              <table class="table table-bordered mt-5">
+                <thead>
+                  <tr>
+                    <th scope="col">Task</th>
+                    <th scope="col" style="width: 120px">Status</th>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">#</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(task, index) in tasks" :key="index">
+                    <td>
+                      <span :class="{ 'line-through': task.status === 'finished' }">
+                        {{ task.name }}
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        class="pointer noselect"
+                        @click="changeStatus(index)"
+                        :class="{
+                          'text-danger': task.status === 'to-do',
+                          'text-success': task.status === 'finished',
+                          'text-warning': task.status === 'in-progress',
+                        }"
+                      >
+                        {{ task.status }}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <div @click="deleteTask(index)">
+                        <span class="fa fa-trash pointer, text-danger"></span>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div @click="editTask(index)">
+                        <p class="fa fa-pen pointer, text-success"></p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          
+
+    </div>
+</body>
+<script src="App.js"></script>
+</html>
